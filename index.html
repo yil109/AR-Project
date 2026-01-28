@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Library AR Swipe Demo</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  </head>
+  <body style="margin:0; overflow:hidden;">
+    <a-scene embedded arjs>
+
+      <a-marker preset="custom" type="pattern" url="img/pattern-marker.patt">
+
+        <!--Background Plan-->
+        <a-plane id="bgPlane" src="img/bg_home.jpg" rotation="-90 0 0" width="4" height="3" position="0 0 -1"></a-plane>
+        
+        <!-- 中心图书馆模型 -->
+        <a-entity id="model_home"
+                  gltf-model="models/model_home.glb"
+                  scale="0.5 0.5 0.5"
+                  position="0 0 0"
+                  rotation="0 0 0">
+        </a-entity>
+
+        <a-entity id="model_public"
+                  visible='false'
+                  gltf-model="models/model_public.glb"
+                  scale="0.5 0.5 0.5"
+                  position="0 0.3 0"
+                  rotation="-90 0 0">
+        </a-entity>
+
+        <a-entity id="model_special"
+                  visible='false'
+                  gltf-model="models/model_special.glb"
+                  scale="0.005 0.005 0.005"
+                  position="0 0.5 0.5"
+                  rotation="0 90 -90">
+        </a-entity>
+
+        <a-entity id="arrowNext"
+          gltf-model="models/direction_arrow.glb"
+          scale="0.2 0.2 0.2"
+          position="0.8 0.5 0.3"
+          rotation="0 0 0">
+  
+            <a-text 
+                    id="arrowText"
+                    value="Public Library"
+                    font="https://cdn.aframe.io/fonts/mozillavr.fnt"
+                    color="#ffffff"
+                    position="0 1.5 0" 
+                    scale="2.5 2.5 2.5" 
+                    rotation="-90 0 0"
+                    align="center">
+            </a-text>
+        </a-entity>
+
+  
+        <a-text 
+              id="title"
+              value="Study Area Rules"
+              font="https://cdn.aframe.io/fonts/mozillavr.fnt"
+              color="#212121"
+              position="0 0.3 -2" 
+              scale="1 1 1" 
+              rotation="-90 0 0"
+              align="center">
+        </a-text>
+
+        <a-text 
+              id="message_public"
+              visible = 'false'
+              value="Public library Rules:\n1.Opening Hours:9:00~20:00\n2.Discussion is allowed\n3.Free book borrowing "
+              font="https://cdn.aframe.io/fonts/mozillavr.fnt"
+              color="#ffffff"
+              position="0 1 -0.1" 
+              scale="0.4 0.4 0.4" 
+              rotation="-90 0 0"
+              align="center">
+        </a-text>
+
+        <a-text 
+              id="message_special"
+              visible = 'false'
+              value="Public library Rules:\n1.Opening Hours:9:00~24:00\n2.Discussion prohibited\n3.No food or drink"
+              font="https://cdn.aframe.io/fonts/mozillavr.fnt"
+              color="#ffffff"
+              position="0 1.5 -0.5"
+              scale="0.5 0.5 0.5" 
+              rotation="-90 0 0"
+              align="center">
+        </a-text>
+
+
+      </a-marker>
+
+      <!-- Camera -->
+      <a-entity camera></a-entity>
+
+    </a-scene>
+
+    <script>
+      let pageIndex = 0; // 0=主页, 1=公共, 2=专用
+
+      const bg = document.getElementById('bgPlane');
+
+      const model_home = document.getElementById('model_home');
+      const model_public = document.getElementById('model_public');
+      const model_special = document.getElementById('model_special');
+
+      const arrowNext = document.getElementById('arrowNext');
+      const arrowText = document.getElementById('arrowText');
+
+      const title = document.getElementById('title');
+      const message_public = document.getElementById('message_public');
+      const message_special = document.getElementById('message_special')
+      // 点击屏幕翻页
+      document.body.addEventListener('click', () => {
+        pageIndex = (pageIndex + 1) % 3;
+
+        if (pageIndex === 0) {
+          bg.setAttribute('src', './img/bg_home.jpg');
+
+
+          model_home.setAttribute('visible', true);
+          model_public.setAttribute('visible', false);
+          model_special.setAttribute('visible', false);
+
+          title.setAttribute('value', 'Study Area Rules');
+
+          message_public.setAttribute('visible', false);
+          message_special.setAttribute('visible', false);
+          
+          arrowText.setAttribute('value', 'Public Library')
+        } else if (pageIndex === 1) {
+          // 公共图书馆规则页
+          bg.setAttribute('src', './img/bg_public.jpg');
+
+          model_home.setAttribute('visible', false);
+          model_public.setAttribute('visible', true);
+          model_special.setAttribute('visible', false);
+
+          title.setAttribute('value', 'Public Library Rules');
+
+          message_public.setAttribute('visible', true);
+          message_special.setAttribute('visible', false);
+
+          arrowText.setAttribute('value', 'Special Library')
+        } else if (pageIndex === 2) {
+          // 专门图书馆规则页
+          bg.setAttribute('src', './img/bg_special.jpg');
+
+          model_home.setAttribute('visible', false);
+          model_public.setAttribute('visible', false);
+          model_special.setAttribute('visible', true);
+
+          title.setAttribute('value', 'Special Library Rules');
+
+          message_public.setAttribute('visible', false);
+          message_special.setAttribute('visible', true);
+
+          arrowText.setAttribute('value', 'HomePage')
+        }
+      });
+    </script>
+  </body>
+</html>
