@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AR.js 增强现实演示</title>
+    <!-- 引入A-Frame库 -->
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <!-- 引入AR.js库 -->
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0px; overflow: hidden;">
+    <!-- AR场景容器 -->
+    <a-scene embedded arjs>
+        <!-- 使用Hiro标记（预设图案） -->
+        <a-marker preset="hiro">
+            <!-- 红色立方体，位于标记上方0.5单位高度 -->
+            <a-box position="0 0.5 0" material="color: red;">
+                <!-- 旋转动画 -->
+                <a-animation 
+                    attribute="rotation"
+                    dur="3000"           
+                    to="360 360 0"     
+                    repeat="indefinite"  
+                    easing="linear">     <!-- 线性缓动 -->
+                </a-animation>
+            </a-box>
+        </a-marker>
+        <!-- 摄像头实体 -->
+        <a-entity camera></a-entity>
+    </a-scene>
+</body>
+</html>

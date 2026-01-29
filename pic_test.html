@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AR.js Marker + GLB</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+  </head>
+  <body style="margin: 0; overflow: hidden;">
+<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; smooth: true;">
+
+      <!-- marker -->
+      <a-marker preset="hiro" smooth="true">
+        <!-- 这里换成你的模型文件名 -->
+      <a-entity
+          gltf-model="url(model/computer.glb)"
+          scale="0.0005 0.0005 0.0005 "
+          position="0 -4 0"
+          rotation="-90 0 0"
+        ></a-entity>
+
+
+        <a-entity
+          gltf-model="url(model/stair.glb)"
+          scale="2 2 2 "
+          position="0 2 6 "
+          rotation="-90 0 0"
+        ></a-entity>
+
+
+
+    <a-entity position="3 0 0" rotation="0 0 0"> 
+
+        <!-- <a-plane >  -->
+<a-plane
+  position="3 0 0"
+  rotation="-90 0 0"
+  width="8"
+  height="8"
+  color="#FFFFFF"
+  material="opacity: 0.9; depthWrite: false"
+>
+
+
+  <!-- 标题 -->
+  <a-text
+    value="📘 Book Borrowing"
+    position="0  1 0.02"
+    align="center"
+    width="5"
+    color="#000"
+    material="depthTest: false"
+
+  ></a-text>
+
+  <!-- 正文 -->
+  <a-text
+    value="Borrowing Rules:\n• 30 days\n• Return at 1F desk\n\nBook Areas:\n• General Library\n• Special Library\n\nSearch:\n• 2F OPAC system"
+    position="0 -0.5 0.02"
+    align="center"
+    width="5"
+    color="#000"
+    material="depthTest: false"
+
+  ></a-text>
+
+
+
+</a-plane>
+
+</a-entity>
+
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
+</html>
