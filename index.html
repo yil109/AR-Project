@@ -128,7 +128,7 @@
         <!--Background Plan-->
         <a-plane id="bgPlane" src="img/bg_home.jpg" rotation="-90 0 0" width="4" height="3" position="0 0 -1"></a-plane>
         
-        <!-- 中心图书馆模型 -->
+        <!-- HomePage Model -->
         <a-entity id="model_home"
                   gltf-model="models/model_home.glb"
                   scale="0.5 0.5 0.5"
@@ -136,6 +136,7 @@
                   rotation="0 90 -90">
         </a-entity>
 
+        <!-- Public Library Model -->
         <a-entity id="model_public"
                   visible='false'
                   gltf-model="models/model_public.glb"
@@ -144,6 +145,7 @@
                   rotation="-90 0 0">
         </a-entity>
 
+        <!-- Special Library Model -->
         <a-entity id="model_special"
                   visible='false'
                   gltf-model="models/model_special.glb"
@@ -152,6 +154,7 @@
                   rotation="0 90 -90">
         </a-entity>
 
+        <!-- Arrow Model -->
         <a-entity id="arrowNext"
           gltf-model="models/direction_arrow.glb"
           scale="0.2 0.2 0.2"
@@ -170,6 +173,7 @@
             </a-text>
         </a-entity>
 
+        <!-- Arrow Model -->
         <a-entity id="arrowBack"
           gltf-model="models/direction_arrow.glb"
           scale="0.2 0.2 0.2"
@@ -188,7 +192,7 @@
             </a-text>
         </a-entity>
 
-  
+        <!-- Title -->
         <a-text 
               id="title"
               value="Study Area Rules"
@@ -200,6 +204,7 @@
               align="center">
         </a-text>
 
+        <!-- Public Library Rules -->
         <a-text 
               id="message_public"
               visible = 'false'
@@ -212,6 +217,7 @@
               align="center">
         </a-text>
 
+        <!-- Special Library Rules -->
         <a-text 
               id="message_special"
               visible = 'false'
@@ -236,8 +242,9 @@
 
       let page = 1;
       
-      let pageIndex = 0; // 0=主页, 1=公共, 2=专用
+      let pageIndex = 0; // 0 = Homepage, 1 = Public, 2 = Private
 
+      // Link the variables to HTML element
       const bg = document.getElementById('bgPlane');
 
       const model_home = document.getElementById('model_home');
@@ -266,6 +273,7 @@
       const markerA = document.getElementById('markerA');
       const markerB = document.getElementById('markerB');
       
+      // Check the current Marker
       markerA.addEventListener('markerFound', () => {
         currentMarker = 'A';
         console.log('Marker A found');
@@ -286,10 +294,12 @@
 
       document.body.addEventListener('click',(e) => {
 
+        // Perform the marker A page update logic
         if(currentMarker == 'A'){
           nextPage();
         }
 
+        // Perform the marker B page update logic
         if(currentMarker == 'B'){
           const clickX = e.clientX;
           const screenWidth = window.innerWidth;
@@ -304,6 +314,7 @@
             pageIndex = 0;
           }
 
+          // Set the attributes of html elements
           if (pageIndex === 0) {
             bg.setAttribute('src', './img/bg_home.jpg');
 
@@ -337,7 +348,7 @@
             arrowNext.setAttribute('visible', false);
             arrowBackText.setAttribute('value', 'HomePage');
           } else if (pageIndex === 2) {
-            // 专门图书馆规则页
+          
             bg.setAttribute('src', './img/bg_special.jpg');
 
             model_home.setAttribute('visible', false);
