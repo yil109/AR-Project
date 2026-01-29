@@ -18,7 +18,7 @@
         <a-entity id="model_home"
                   gltf-model="models/model_home.glb"
                   scale="0.5 0.5 0.5"
-                  position="0 0 0"
+                  position="0 0.5 0"
                   rotation="-30 45 0">
         </a-entity>
 
@@ -41,17 +41,35 @@
         <a-entity id="arrowNext"
           gltf-model="models/direction_arrow.glb"
           scale="0.2 0.2 0.2"
-          position="0.8 0.5 0.3"
+          position="1 0.5 0.3"
           rotation="0 0 0">
   
             <a-text 
-                    id="arrowText"
-                    value="Public Library"
+                    id="arrowNextText"
+                    value="Special Library"
                     font="https://cdn.aframe.io/fonts/mozillavr.fnt"
                     color="#ffffff"
                     position="0 1.5 0" 
                     scale="3 3 3" 
                     rotation="-90 0 0"
+                    align="center">
+            </a-text>
+        </a-entity>
+
+        <a-entity id="arrowBack"
+          gltf-model="models/direction_arrow.glb"
+          scale="0.2 0.2 0.2"
+          position="-1 0.5 0.3"
+          rotation="0 180 0">
+  
+            <a-text 
+                    id="arrowBackText"
+                    value="Public Library"
+                    font="https://cdn.aframe.io/fonts/mozillavr.fnt"
+                    color="#ffffff"
+                    position="0 1.5 0" 
+                    scale="3 3 3" 
+                    rotation="-90 180 0"
                     align="center">
             </a-text>
         </a-entity>
@@ -110,14 +128,28 @@
       const model_special = document.getElementById('model_special');
 
       const arrowNext = document.getElementById('arrowNext');
-      const arrowText = document.getElementById('arrowText');
+      const arrowNextText = document.getElementById('arrowNextText');
+
+      const arrowBack = document.getElementById('arrowBack');
+      const arrowBackText = document.getElementById('arrowBackText');
 
       const title = document.getElementById('title');
       const message_public = document.getElementById('message_public');
       const message_special = document.getElementById('message_special')
       // 点击屏幕翻页
-      document.body.addEventListener('click', () => {
-        pageIndex = (pageIndex + 1) % 3;
+      document.body.addEventListener('click', (e) => {
+        const clickX = e.clientX;
+        const screenWidth = window.innerWidth;
+
+        if(pageIndex == 0){
+          if(clickX <= screenWidth / 2){
+            pageIndex = 1;
+          }else{
+            pageIndex = 2;
+          }
+        }else{
+          pageIndex = 0;
+        }
 
         if (pageIndex === 0) {
           bg.setAttribute('src', './img/bg_home.jpg');
@@ -132,7 +164,10 @@
           message_public.setAttribute('visible', false);
           message_special.setAttribute('visible', false);
           
-          arrowText.setAttribute('value', 'Public Library')
+          arrowNext.setAttribute('visible', true);
+          arrowBack.setAttribute('visible', true);
+          arrowNextText.setAttribute('value', 'Special Library');
+          arrowBackText.setAttribute('value', 'Public Library');
         } else if (pageIndex === 1) {
           // 公共图书馆规则页
           bg.setAttribute('src', './img/bg_public.jpg');
@@ -146,7 +181,8 @@
           message_public.setAttribute('visible', true);
           message_special.setAttribute('visible', false);
 
-          arrowText.setAttribute('value', 'Special Library')
+          arrowNext.setAttribute('visible', false);
+          arrowBackText.setAttribute('value', 'HomePage');
         } else if (pageIndex === 2) {
           // 专门图书馆规则页
           bg.setAttribute('src', './img/bg_special.jpg');
@@ -160,7 +196,8 @@
           message_public.setAttribute('visible', false);
           message_special.setAttribute('visible', true);
 
-          arrowText.setAttribute('value', 'HomePage')
+          arrowNext.setAttribute('visible', false);
+          arrowBackText.setAttribute('value', 'HomePage');
         }
       });
     </script>
